@@ -4,5 +4,5 @@ with sync_playwright() as p:
     browser = p.chromium.launch(headless=False)
     page = browser.new_page()
     page.goto("https://www.amazon.com/-/es/")
-    page.screenshot(path="sync.png")
+    page.screenshot(path="./screenshots/sync.png")
     #browser.close()

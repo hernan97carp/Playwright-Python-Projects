@@ -19,7 +19,7 @@ async def main():
         #screenshot
         await page.screenshot(path="screenshots/checkboxes.png")
         #stopTracing
-        await context.tracing.stop(path = "logs/trace.zip")
+        await context.tracing.stop(path = "logs/traceCheckboxes.zip")
          #-Closing browser
         await browser.close()
 
