@@ -17,9 +17,9 @@ async def main():
         await expect(page.get_by_label('Home')).to_be_checked() 
         await expect(page.locator("#result")).to_have_text("You have selected :homedesktopnotescommandsdocumentsworkspacereactangularveuofficepublicprivateclassifiedgeneraldownloadswordFileexcelFile")
         #screenshot
-        await page.screenshot(path="screenshots/checkboxes.png")
+        await page.screenshot(path="screenshots/demoqa/elements/checkboxes.png")
         #stopTracing
-        await context.tracing.stop(path = "logs/traceCheckboxes.zip")
+        await context.tracing.stop(path = "logs/demoqa/elements/traceCheckboxes.zip")
          #-Closing browser
         await browser.close()
 

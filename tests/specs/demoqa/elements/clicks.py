@@ -30,9 +30,9 @@ async def main():
         await expect(page.locator('#doubleClickMessage')).to_have_text('You have done a double click')
         await expect(page.locator('#rightClickMessage')).to_have_text('You have done a right click')
         #Screenshot
-        await page.screenshot(path='screenshots/dynamicClick.png')
+        await page.screenshot(path='screenshots/demoqa/elements/dynamicClick.png')
         #StopTracing
-        await context.tracing.stop(path= 'logs/traceClicks.zip')
+        await context.tracing.stop(path= 'logs/demoqa/elements/traceClicks.zip')
         await browser.close()
         
 asyncio.run(main())
