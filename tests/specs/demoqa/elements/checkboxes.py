@@ -1,26 +1,38 @@
-#to run this: python inputs/checkboxes.py
+import pytest
 import asyncio
 from playwright.async_api import async_playwright, expect
+from tests.testbase import CheckBoxesPage
 
-async def main():
+@pytest.mark.asyncio
+async def test_checkboxes():
     async with async_playwright() as p:
+        # Lanzar el navegador
         browser = await p.chromium.launch(headless=False)
         context = await browser.new_context()
+        
+        # Iniciar el trazado
         await context.tracing.start(screenshots=True, snapshots=True, sources=True)
+        
         page = await context.new_page()
+        checkBoxPage = CheckBoxesPage(page)
         
-        await page.set_viewport_size({"width": 1800, "height": 1200})
-        await page.goto("https://demoqa.com/checkbox")
-        await page.check('label[for="tree-node-home"]')
+        # Realizar las acciones en la página
+        await checkBoxPage.viewPortSize()
+        await checkBoxPage.navigate()
+        await checkBoxPage.checkHome()
+
+        # Assertions
+        await expect(checkBoxPage.labelHome).to_be_checked()
+        await expect(checkBoxPage.result).to_have_text(checkBoxPage.resultText)
         
-        #Assertions
-        await expect(page.get_by_label('Home')).to_be_checked() 
-        await expect(page.locator("#result")).to_have_text("You have selected :homedesktopnotescommandsdocumentsworkspacereactangularveuofficepublicprivateclassifiedgeneraldownloadswordFileexcelFile")
-        #screenshot
-        await page.screenshot(path="screenshots/demoqa/elements/checkboxes.png")
-        #stopTracing
-        await context.tracing.stop(path = "logs/demoqa/elements/traceCheckboxes.zip")
-         #-Closing browser
+        # Tomar una captura de pantalla
+        await checkBoxPage.screenshot()
+        
+        # Detener el trazado
+        await context.tracing.stop(path= checkBoxPage.tracePath)
+        
+        # Cerrar el navegador
         await browser.close()
 
-asyncio.run(main())
+if __name__ == "__main__":
+    pytest.main(["-v", __file__])
